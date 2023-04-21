@@ -1,42 +1,55 @@
 name: Bug Report
-description: Create a report to help us improve
+description: File a bug report
 title: "[Bug]: "
-labels: ["bug", "triage"]
+labels: ["bug"]
 assignees:
+  - massimo-gollo
 body:
   - type: textarea
-    id: description
     attributes:
-      label: Describe the bug
-      description: A clear and concise description of what the bug is.
-      placeholder:
-    validations:
-      required: false
-  - type: textarea
-    id: reproduce
-    attributes:
-      label: To Reproduce
-      description:  Steps to reproduce the behavior
-      value: |
-        1. Go to '...'
-        2. Click on '....'
-        3. Scroll down to '....'
-        4. See error
+      label: Current Behavior
+      description: A concise description of what you're experiencing.
     validations:
       required: true
   - type: textarea
-    id: expected
     attributes:
-      label: expected behavior
-      description: A clear and concise description of what you expected to happen.
+      label: Expected Behavior
+      description: A concise description of what you expected to happen.
+    validations:
+      required: true
   - type: textarea
-    id: actual
     attributes:
-      label: actual behavior
-      description: A clear and concise description of what actually happened.
+      label: Steps To Reproduce
+      description: Steps to reproduce the behavior.
+      placeholder: |
+        1. In this environment...
+        2. With this config...
+        3. Run '...'
+        4. See error...
+    validations:
+      required: true
   - type: textarea
-    id: logs
     attributes:
-      label: Relevant log output
-      description: Please copy and paste any relevant log output. This will be automatically formatted into code, so no need for backticks.
-      render: shell
+      label: Environment
+      description: |
+        Describe the software and its versions that you use. Examples:
+          - **OS**: Ubuntu 22.04
+          - **Terraform**: 1.3.9
+          - **Graylog**: 5.0.4
+          etc. etc.
+      value: |
+        - OS:
+        - Docker Compose:
+        - Python:
+      render: markdown
+    validations:
+      required: false
+  - type: textarea
+    attributes:
+      label: Anything else?
+      description: |
+        Links? References? Anything that will give me more context about the issue you are encountering!
+
+        Tip: You can attach images or log files by clicking this area to highlight it and then dragging files in.
+    validations:
+      required: false
