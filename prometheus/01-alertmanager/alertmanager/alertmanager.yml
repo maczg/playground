@@ -1,0 +1,15 @@
+route:
+  receiver: 'mail'
+  repeat_interval: 4h
+  group_by: [ alertname ]
+
+
+#TODO set up properly
+receivers:
+  - name: 'mail'
+    email_configs:
+      - smarthost: '$SMTP_HOST:$SMTP_PORT'
+        auth_username: '$SMTP_USER'
+        auth_password: "$SMTP_PASSWORD"
+        from: '$SMTP_FROM'
+        to: '$SMTP_TO'

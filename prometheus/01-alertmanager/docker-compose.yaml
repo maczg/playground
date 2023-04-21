@@ -1,0 +1,40 @@
+version: '3.8'
+
+# x-* generic extensions
+x-common-settings: &common-settings-config
+  restart: unless-stopped
+
+x-port-mapping:
+  prometheus: &prometheus-ports
+    - 9090:9090
+
+volumes:
+  alertmanager-data:
+
+services:
+  prometheus:
+    <<: *common-settings-config
+    ports: *prometheus-ports
+    image: prom/prometheus
+    user: root
+    volumes:
+      - ./prometheus/data:/data
+      - ./prometheus/etc/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - '--storage.tsdb.path=/data'
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--log.level=debug'
+      - '--web.enable-lifecycle'
+      - '--web.listen-address=:9090'
+
+  alertmanager:
+    <<: *common-settings-config
+    image: prom/alertmanager:v0.23.0
+    ports:
+      - "9093:9093"
+    volumes:
+      - "./alertmanager:/config"
+      - alertmanager-data:/data
+    command:
+      --config.file=/config/alertmanager.yml
+      --log.level=debug
