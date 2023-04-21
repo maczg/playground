@@ -1,0 +1,24 @@
+---
+
+- name: debug
+  debug:
+    msg: "https://github.com/prometheus/node_exporter/releases/download/v{{ node_exp_version }}/node_exporter-{{ node_exp_version }}.linux-{{ _arch }}.tar.gz"
+
+- name: Get and unarchive
+  unarchive:
+    src: "https://github.com/prometheus/node_exporter/releases/download/v{{ node_exp_version }}/node_exporter-{{ node_exp_version }}.linux-{{ _arch }}.tar.gz"
+    dest: /tmp
+    remote_src: yes
+
+- name: move binary to install dir
+  copy:
+    remote_src: yes
+    src: "/tmp/node_exporter-{{ node_exp_version }}.linux-{{ _arch }}/node_exporter"
+    dest: "/usr/local/bin"
+    mode: 0755
+    owner: root
+    group: root
+
+- name: debug version
+  shell: | 
+    /usr/local/bin/node_exporter --version

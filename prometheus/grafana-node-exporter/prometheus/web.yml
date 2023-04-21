@@ -1,0 +1,3 @@
+#TODO uncomment and kustomize TO ENABLE BASIC AUTH
+#basic_auth_users:
+#  $USER: $PASSWD_ENCRYPTED

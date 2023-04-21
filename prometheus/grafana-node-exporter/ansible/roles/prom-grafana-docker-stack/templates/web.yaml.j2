@@ -1,0 +1,4 @@
+{% if 'basic_auth' in prom_settings %}
+basic_auth_users:
+  {{ prom_settings.basic_auth.username }}: {{ prom_settings.basic_auth.password | password_hash('blowfish') }}
+{% endif %}

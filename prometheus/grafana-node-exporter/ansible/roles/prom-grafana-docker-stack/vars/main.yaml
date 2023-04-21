@@ -1,0 +1,26 @@
+prom_settings:
+  basic_auth:
+    username: root
+    password: toor
+
+grafana_settings:
+  GF_ADMIN_USER: admin
+  GF_ADMIN_PWD: p4ssw0rd
+
+prom_host_port: 9090
+prom_port: 9090
+grafana_host_port: 9000
+grafana_port: 3000
+
+targets:
+  - name: sample-targed
+    job_name: node
+    host: $IP
+    port: $PORT
+    vendor: $VENDOR
+    metric_path: /metrics
+    # if endpoint is protected
+    basic_auth:
+      username: user
+      password: apassword
+

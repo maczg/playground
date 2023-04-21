@@ -1,0 +1,51 @@
+- name: Create compose-dir
+  file: path=~/compose state=directory mode=0755
+
+- name: Create prometheus config dir
+  file: path=~/compose/{{ item }} state=directory mode=0755
+  with_items:
+    - prometheus
+
+- name: template docker-compose.yml
+  template:
+    src: docker-compose.yaml.j2
+    dest: ~/compose/docker-compose.yaml
+
+- name: template prometheus.yml
+  template:
+    src: prometheus.j2
+    dest: ~/compose/prometheus/prometheus.yml
+
+- name: template web.yml
+  template:
+    src: web.yaml.j2
+    dest: ~/compose/prometheus/web.yml
+
+- name: Configure grafana datasource and node dashboard
+  synchronize:
+    src: ./roles/grafana-node-exporter/templates/grafana
+    dest: ~/compose/
+
+- name: Ensure pip3 is installed
+  package:
+    name: python3-pip
+    state: present
+
+- name: Ensure docker-py is installed
+  pip:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - docker
+    - docker-compose
+
+
+- name: Start docker-compose
+  community.docker.docker_compose:
+    project_src: ~/compose
+  register: output
+
+- debug:
+   var: output
+
+

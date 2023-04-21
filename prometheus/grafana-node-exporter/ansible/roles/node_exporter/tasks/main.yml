@@ -1,0 +1,7 @@
+---
+- import_tasks: prepare.yml
+
+- import_tasks: download.yml
+
+- import_tasks: configure.yml
+

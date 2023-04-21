@@ -1,0 +1,18 @@
+---
+arch_map:
+  i386: '386'
+  x86_64: 'amd64'
+  aarch64: 'arm64'
+  armv7l: 'armv7'
+  armv6l: 'armv6'
+
+_arch: "{{ arch_map[ansible_architecture] | default(ansible_architecture) }}"
+
+node_exp_version: 1.4.0
+node_exporter_web_listen_address: "0.0.0.0:9100"
+node_exporter_web_telemetry_path: "/metrics"
+
+# Internal variables.
+_node_exporter_binary_install_dir: "/usr/local/bin"
+_node_exporter_system_group: "prometheus"
+_node_exporter_system_user: "{{ _node_exporter_system_group }}"

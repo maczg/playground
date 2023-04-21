@@ -1,0 +1,14 @@
+---
+- name: Copy the node_exporter systemd service file
+  template:
+    src: node_exporter.service.j2
+    dest: /etc/systemd/system/node_exporter.service
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart node_exporter
+
+- name: Enable node_exporter service
+  service:
+    name: node_exporter.service
+    enabled: yes

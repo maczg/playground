@@ -1,0 +1,22 @@
+---
+- name: "Ensure group {{ _node_exporter_system_group }} exists"
+  group:
+    name: prometheus
+    state: present
+    system: true
+
+- name: "Ensure user {{ _node_exporter_system_group }} exits in {{ _node_exporter_system_group }} group"
+  user:
+    name: prometheus
+    shell: /sbin/nologin
+    system: true
+    group: prometheus
+
+- name: Install deps software
+  package:
+    name: "{{item}}"
+    state: present
+  with_items:
+    - wget
+    - curl
+    - vim

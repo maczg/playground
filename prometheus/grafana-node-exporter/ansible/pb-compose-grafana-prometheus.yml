@@ -1,0 +1,5 @@
+- name: Template Playbook
+  hosts: all
+  become: yes
+  roles:
+    - prom-grafana-docker-stack

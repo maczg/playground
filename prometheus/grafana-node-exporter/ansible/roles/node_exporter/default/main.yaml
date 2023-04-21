@@ -1,0 +1,9 @@
+---
+node_exp_version: 1.4.0
+node_exporter_web_listen_address: "0.0.0.0:9100"
+node_exporter_web_telemetry_path: "/metrics"
+
+# Internal variables.
+_node_exporter_binary_install_dir: "/usr/local/bin"
+_node_exporter_system_group: "prometheus"
+_node_exporter_system_user: "{{ _node_exporter_system_group }}"

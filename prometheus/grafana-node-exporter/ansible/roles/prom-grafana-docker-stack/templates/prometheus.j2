@@ -1,0 +1,40 @@
+global:
+  scrape_interval:     {{ prometheus.global.scrape_interval | default('15s') }}
+  evaluation_interval: {{ prometheus.global.evaluation_interval | default('15s') }}
+
+scrape_configs:
+  # Scrape itself
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:{{ prom_port | default('9090') }}']
+
+  {% for target in targets +%}
+  # MANAGED By ANSIBLE
+  - job_name: '{{ target.name }}_{{ target.job_name }}'
+    scrape_interval: 5s
+    static_configs:
+      - targets: [ '{{ target.host }}:{{ target.port }}' ]
+        labels:
+          vendor: '{{ target.vendor | default('unclassified') }}'
+    metrics_path: '{{ target.metric_path |  default('/metrics') }}'
+    {% if 'basic_auth' in target -%}
+    basic_auth:
+     username: '{{ target.basic_auth.username }}'
+     password: '{{ target.basic_auth.password }}'
+    {% endif %}
+
+    relabel_configs:
+    - source_labels: [__address__]
+      separator: ':'
+      regex: '(.*):(.*)'
+      replacement: '{{ target.host }}'
+      target_label: instance
+
+    {% if target.job_name == 'node' -%}
+    - source_labels: [job]
+      regex: '(.*)'
+      replacement: 'node'
+      target_label: job
+    {% endif %}
+  {%- endfor %}
+
