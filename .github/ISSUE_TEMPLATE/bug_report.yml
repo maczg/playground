@@ -1,0 +1,42 @@
+name: Bug Report
+description: Create a report to help us improve
+title: "[Bug]: "
+labels: ["bug", "triage"]
+assignees:
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Describe the bug
+      description: A clear and concise description of what the bug is.
+      placeholder:
+    validations:
+      required: false
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: To Reproduce
+      description:  Steps to reproduce the behavior
+      value: |
+        1. Go to '...'
+        2. Click on '....'
+        3. Scroll down to '....'
+        4. See error
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: expected behavior
+      description: A clear and concise description of what you expected to happen.
+  - type: textarea
+    id: actual
+    attributes:
+      label: actual behavior
+      description: A clear and concise description of what actually happened.
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant log output
+      description: Please copy and paste any relevant log output. This will be automatically formatted into code, so no need for backticks.
+      render: shell
